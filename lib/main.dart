@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget{
+class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp>  with SingleTickerProviderStateMixin {
-
-
+class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(debugShowCheckedModeBanner: false, home: HomePage());
@@ -21,8 +19,10 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin{
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
   TabController controller;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -33,6 +33,68 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       vsync: this,
     );
   }
+  List<WhatsAppDetails> details =[
+    WhatsAppDetails(
+      'Harshitha',
+      "hello!",
+      '16:09',
+      MessageStatus.Delivered,
+    ),
+    WhatsAppDetails(
+      'hk',
+      "hey!",
+      '15:09',
+      MessageStatus.Delivered,
+    ),
+    WhatsAppDetails(
+      'mum',
+      "come home",
+      '12:09',
+      MessageStatus.Delivered,
+    ),
+    WhatsAppDetails(
+      'dad',
+      "wru?",
+      '16:10',
+      MessageStatus.Delivered,
+    ),
+    WhatsAppDetails(
+      'Mohit',
+      "oyyy!",
+      '12:09',
+      MessageStatus.Delivered,
+    ),
+    WhatsAppDetails(
+      'Fessa',
+      "helllo!",
+      '16:09',
+      MessageStatus.Delivered,
+    ),
+    WhatsAppDetails(
+      'germy',
+      "hello!",
+      '16:09',
+      MessageStatus.Delivered,
+    ),
+    WhatsAppDetails(
+      'tom',
+      "hello!",
+      '16:09',
+      MessageStatus.Delivered,
+    ),
+    WhatsAppDetails(
+      'rob',
+      "hello!",
+      '16:09',
+      MessageStatus.Delivered,
+    ),
+    WhatsAppDetails(
+      'bob',
+      "hello!",
+      '16:09',
+      MessageStatus.Delivered,
+    ),
+  ];
   @override
   Widget build(BuildContext context) {
     Color whatsAppColor = Color(0xFF32642E);
@@ -41,43 +103,69 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         bottom: TabBar(
           controller: controller,
           tabs: <Widget>[
-            Tab(child: Text("chats"),),
-            Tab(child: Text("status"),),
-            Tab(child: Text("calls"),),
+            Tab(
+              child: Text("chats"),
+            ),
+            Tab(
+              child: Text("status"),
+            ),
+            Tab(
+              child: Text("calls"),
+            ),
           ],
         ),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.search),
+          IconButton(
+            icon: Icon(Icons.search),
             color: Colors.white,
-            onPressed: (){
+            onPressed: () {
               //TODO
-            },),
-          IconButton(icon: Icon(Icons.more_vert),
-            onPressed: (){
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.more_vert),
+            onPressed: () {
               //TODO
-            },)
+            },
+          )
         ],
         backgroundColor: whatsAppColor,
         title: Text('WhatsApp'),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
+        onPressed: () {
           //TODO
-
         },
         child: Icon(Icons.chat),
         backgroundColor: whatsAppColor,
       ),
       body: ListView.builder(
-          itemCount: 10,
+          itemCount: details.length,
           itemBuilder: (BuildContext context, int count) {
-            return WhatsAppCard();
+            return WhatsAppCard(
+              name: details[count].name,
+              message: details[count].message,
+              time: details[count].time,
+              status: details[count].status,
+            );
           }),
     );
   }
 }
 
 class WhatsAppCard extends StatelessWidget {
+  final String name;
+  final String message;
+  final String time;
+  final MessageStatus status;
+
+  WhatsAppCard({
+    this.message,
+    this.name,
+    this.status,
+    this.time,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -101,7 +189,7 @@ class WhatsAppCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Text(
-                  'Harshitha',
+                  name,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
                 ),
                 Row(
@@ -113,7 +201,7 @@ class WhatsAppCard extends StatelessWidget {
                       color: Colors.grey,
                     ),
                     Text(
-                      'Hi!',
+                      message,
                       style: TextStyle(color: Colors.grey),
                     )
                   ],
@@ -126,10 +214,22 @@ class WhatsAppCard extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(top: 14.0),
-            child: Text('15:32'),
+            child: Text(time),
           ),
         ],
       ),
     );
   }
 }
+
+class WhatsAppDetails {
+  String name;
+  String message;
+  String time;
+  MessageStatus status;
+  WhatsAppDetails(
+      this.name,this.message,this.time,this.status
+      );
+}
+
+enum MessageStatus { Delivered, Received, Seen }
